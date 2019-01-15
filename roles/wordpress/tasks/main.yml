@@ -25,16 +25,8 @@
 - name: Create upload folder
   file: path=/var/www/wordpress/wp-content/uploads  state=directory mode=0755 owner=www-data
 
-- name: Update WordPress config file
-  lineinfile:
-    dest=/var/www/wordpress/wp-config.php
-    regexp="{{ item.regexp }}"
-    line="{{ item.line }}"
-  with_items:
-    - {'regexp': "define\\('DB_NAME', '(.)+'\\);", 'line': "define('DB_NAME', '{{wp_mysql_db}}');"}        
-    - {'regexp': "define\\('DB_USER', '(.)+'\\);", 'line': "define('DB_USER', '{{wp_mysql_user}}');"}        
-    - {'regexp': "define\\('DB_PASSWORD', '(.)+'\\);", 'line': "define('DB_PASSWORD', '{{wp_mysql_password}}');"}
-  sudo: yes
-
-
-
+- name: Update Wordpress config
+  become: true 
+  template:
+    src: wp-config.php.j2
+    dest: /var/www/wordpress/wp-config.php
