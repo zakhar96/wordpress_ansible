@@ -1,0 +1,4 @@
+.venv
+vault.key
+*.retry
+*.swp
