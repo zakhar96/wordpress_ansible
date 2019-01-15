@@ -1,0 +1,11 @@
+php_packages:
+  - libapache2-mod-php7.0
+wp_mysql_db: wordpress
+wp_mysql_user: wordpress
+wp_mysql_password: "{{ vault_wp_mysql_password }}"
+mysql_databases:
+  - name: "{{ wp_mysql_db }}"
+mysql_users:
+  - name: "{{ wp_mysql_user }}"
+    password: "{{ wp_mysql_password }}"
+    priv: "{{ wp_mysql_db }}.*:ALL"
